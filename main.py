@@ -6,13 +6,13 @@ from PIL import Image
 from core.queries import query, reset
 from core.sidebar import sidebar
 
-st.set_page_config(page_title="Synapse Email Parser", page_icon="📖", layout="wide")
+st.set_page_config(page_title="ontact Chatbot Demo", page_icon="📖", layout="wide")
 
 # image
 image = Image.open('src/logo.png')
 st.image(image)
 # Title
-st.header("Synapse Email Parser")
+st.header("Contact Chatbot Demo")
 
 # sidebar
 sidebar()
