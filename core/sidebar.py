@@ -9,7 +9,7 @@ def sidebar():
     with st.sidebar:
         st.markdown(
             "## How to use\n"
-            "1. Enter your password bellow🔑\n"  # noqa: E501
+            "1. Enter your password below🔑\n"  # noqa: E501
             "2. Talk with the Chatbot to navigate the available options\n"
         )
 
