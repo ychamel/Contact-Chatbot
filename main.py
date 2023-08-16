@@ -1,12 +1,14 @@
+
 import openai
 import streamlit as st
 from PIL import Image
 
 # init
+from core.info import States
 from core.queries import query, reset
 from core.sidebar import sidebar
 
-st.set_page_config(page_title="ontact Chatbot Demo", page_icon="📖", layout="wide")
+st.set_page_config(page_title="Contact Chatbot Demo", page_icon="📖", layout="wide")
 
 # image
 image = Image.open('src/logo.png')
@@ -26,11 +28,17 @@ if not openai_api_key:
     st.stop()
 openai.api_key = openai_api_key
 
+# start a new messaging session
 if not st.session_state.get("messages"):
     reset()
 # create message log
 if not st.session_state.get("chat_logs"):
     st.session_state["chat_logs"] = []
+
+# setup the page state
+if not st.session_state.get("state"):
+    st.session_state["state"] = States.main
+
 # chat
 question = st.text_input("Chat:")
 if question:

@@ -1,3 +1,5 @@
+from enum import Enum
+
 options = {
     "Retail services": {
         "Financing services": {
@@ -273,21 +275,74 @@ outputs = {
     [Reward points bot]
     """,
     "credit_limit": """
-    Left to use: ….... EGP \n
-    Total Limit: …….. EGP \n
+    Left to use: 50000 EGP \n
+    Total Limit: 100000 EGP \n
     """,
     "check_or_pay_installments": """
-    Due payments…. \n
+    Due payments 2000 EGP \n
     To pay your due installments, visit (https://contacteg.page.link/app) \n
     """
 }
 
+for_more_info = """
+For more information visit our website: www.contact.eg \n
+Download Contact Brochure: bit.ly/3YpRsnV \n
+Download Contact mobile app: https://contacteg.page.link/app \n
+Visit our social media pages: https://www.facebook.com/ContactEg \n
+Or call 16177 \n
+"""
+
+products = ['Automobile', 'Trucks', 'consumer_finance', 'Education', 'Club_membership', 'weddings_and_events_finance',
+            'home_interior', 'furniture', 'home_equity', 'home', 'maintenance', 'green', 'Insurance_brokerage',
+            'electronic_payments', 'Contact_homes', 'leasing', 'factoring']
+know_more = ['Rewards_program', 'Referral_program']
+others = ['branches', 'Complaints_and_suggestions', 'Evaluation_and_feedback', 'reward_points']
+
+
+class States(Enum):
+    main = 'main'
+    product = 'product'
+    know_more = 'know_more'
+    others = 'others'
+
+
+def get_question(state):
+    if state == States.main:
+        return ""
+    if state == States.product:
+        return "Are you interested in that product?"
+    if state == States.know_more:
+        return "Do you want to know more about that program?"
+    if state == States.others:
+        return ""
+    return ""
+
+
+def get_state(key):
+    """
+    Get the type of key and returns the program state
+    :param key:
+    :return:
+    """
+    if key in products:
+        return States.product
+    elif key in know_more:
+        return States.know_more
+    elif key in others:
+        return States.others
+    return States.main
+
+
 def get_key(phrase):
+    """
+    checks which key is related to this phrase
+    :param phrase:
+    :return:
+    """
     for key in outputs.keys():
         if key in phrase:
             return key
     for key in options.keys():
         if key in phrase and type(options[key]) is list and len(options[key]) == 1:
             return options[key][0]
-
     return None
